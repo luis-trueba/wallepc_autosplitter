@@ -10,14 +10,11 @@ state("WALL-E")
 startup
 {
 	settings.Add("subsplits", true, "Enable Mid-Level Subsplits");
+	settings.Add("load_removal", false, "Enable Load Removal");
 
 	refreshRate = 120;
 }
 
-init
-{
-	vars.version = "WALL-E [Fuck]";
-}
 split
 {
 	if (settings["subsplits"]) {
@@ -35,12 +32,14 @@ split
 
 isLoading
 {
-	//if (current.saving == 4096 || (current.instage == 1 && current.cutscene != 258828840 && current.cutscene != 2590921123 && current.cutscene != 258829920 && current.cutscene != 258633264)) {
-	if (current.saving == 4096 || (current.loading == 1041865114 || current.loading == 1056964608)) {
-		return true;
-	}
-
-	else {
-		return false;
+	if(settings["load_removal"]) {
+		//if (current.saving == 4096 || (current.instage == 1 && current.cutscene != 258828840 && current.cutscene != 2590921123 && current.cutscene != 258829920 && current.cutscene != 258633264)) {
+		if (current.saving == 4096 || (current.loading == 1041865114 || current.loading == 1056964608)) {
+			return true;
+		}
+	
+		else {
+			return false;
+		}
 	}
 }
